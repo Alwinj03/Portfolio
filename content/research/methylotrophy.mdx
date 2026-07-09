@@ -1,31 +1,21 @@
 ---
-title: Synthetic Methylotrophy
-subtitle: Engineering microbes to grow on one-carbon feedstocks.
-description: Metabolic engineering and modeling to build organisms that turn methanol into value.
-date: 2025-03-01
-year: 2025
+title: "Systems-Guided Bioprocess Design for Sustainable L-Lysine Production using Synthetic Methylotrophic E. coli"
+conference: "International Conference on Bioengineering"
 featured: true
-status: active
-tags: [Metabolic Engineering, Systems Biology, Modeling]
-stack: [Python, COBRApy, Flux Balance Analysis]
-links:
-  paper: ""
-  github: ""
 ---
 
-> TEMPLATE — replace with your real research.
+## Can you teach *E. coli* to eat methanol and make amino acids?
 
-## The question
+That's the question behind my research, presented at the **International Conference on Bioengineering** (SRMIST, Kattankulathur).
 
-Can we rewire central carbon metabolism so that a host organism grows
-efficiently on one-carbon compounds like methanol?
+I built a genome-scale metabolic model of *E. coli* in **COBRApy** to simulate synthetic methylotrophy for sustainable L-lysine production.
 
-## Methods
+What I did:
 
-- Genome-scale metabolic modeling and flux balance analysis
-- Pathway design and thermodynamic feasibility checks
-- Iterative design–build–test cycles
+- Reconstructed a genome-scale metabolic model (GEM) of *E. coli*
+- Dropped in the RuMP pathway enzymes (MDH, HPS, PHI)
+- Added a redox balancing strategy
+- Redirected carbon flux toward the Aspartate–DAP lysine pathway
+- Ran Flux Balance Analysis (FBA) to predict growth + theoretical lysine yield
 
-## Impact
-
-A step toward sustainable bioproduction from non-sugar feedstocks.
+**Why methanol?** Normal amino acid production leans on sugar fermentation — which chains industrial biotech to agriculture. Methanol can be made from captured CO₂, making it a clean **C1 feedstock** for circular, low-carbon biomanufacturing.
