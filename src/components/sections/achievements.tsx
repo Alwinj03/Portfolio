@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Award, ChevronDown } from 'lucide-react'
 import type { Card } from '@/lib/content'
@@ -80,14 +81,18 @@ export function Achievements({ items }: { items: Card[] }) {
                       {a.gallery.length > 0 && (
                         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
                           {a.gallery.map((src) => (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
+                            <div
                               key={src}
-                              src={src}
-                              alt={a.title}
-                              loading="lazy"
-                              className="aspect-video w-full rounded-xl border border-border object-cover"
-                            />
+                              className="relative aspect-video w-full overflow-hidden rounded-xl border border-border"
+                            >
+                              <Image
+                                src={src}
+                                alt={a.title}
+                                fill
+                                sizes="(max-width: 640px) 50vw, 33vw"
+                                className="object-cover"
+                              />
+                            </div>
                           ))}
                         </div>
                       )}

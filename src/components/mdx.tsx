@@ -2,6 +2,7 @@
 
 import * as runtime from 'react/jsx-runtime'
 import { useMemo } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
@@ -25,15 +26,17 @@ const components = {
       />
     )
   },
-  img: ({ className, alt = '', ...props }: React.ComponentProps<'img'>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className={cn('my-6 w-full rounded-2xl border border-border', className)}
-      alt={alt}
-      loading="lazy"
-      {...props}
-    />
-  ),
+  img: ({ src, alt = '' }: React.ComponentProps<'img'>) =>
+    typeof src === 'string' ? (
+      <Image
+        src={src}
+        alt={alt}
+        width={1600}
+        height={900}
+        sizes="(max-width: 768px) 100vw, 768px"
+        className={cn('my-6 h-auto w-full rounded-2xl border border-border')}
+      />
+    ) : null,
 }
 
 export function MDX({ code }: { code: string }) {

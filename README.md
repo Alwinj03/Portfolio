@@ -24,6 +24,7 @@ and DeepMind: cinematic, elegant, and memorable.
 | SEO           | Native Metadata API, OpenGraph, Twitter cards, JSON-LD        |
 | Feeds         | `sitemap.xml`, `robots.txt`, `rss.xml`, PWA `manifest`        |
 | Theming       | `next-themes` — dark + light                                  |
+| Hosting       | **Vercel-native**: Image Optimization, Speed Insights, Analytics |
 
 ## Quick start
 
@@ -94,15 +95,37 @@ velite.config.ts         ← collection schemas
 
 ## Deployment (Vercel)
 
+This project is architected specifically for Vercel — zero config beyond one
+environment variable.
+
 1. Push this repo to GitHub.
-2. Import it in [Vercel](https://vercel.com/new) — framework preset **Next.js**
-   is detected automatically. No build settings needed.
+2. Import it in [Vercel](https://vercel.com/new) — the **Next.js** preset is
+   detected automatically. `vercel.json` pins the framework and adds long-term
+   caching + security headers.
 3. Set the environment variable **`NEXT_PUBLIC_SITE_URL`** to your final domain
    (used for absolute SEO/OG/sitemap URLs).
-4. Deploy. That's it — everything is statically generated.
+4. Deploy. Everything is statically pre-rendered and served from Vercel's edge.
 
-The build runs Velite automatically via `next.config.mjs`, so no extra step is
-required in CI.
+### Why it's optimized for Vercel
+
+- **Content build is CI-safe.** The `prebuild` script runs Velite (`velite
+  --clean`) before `next build`, so content is always generated in Vercel's
+  pipeline regardless of how the config loads.
+- **Image Optimization.** Every image goes through `next/image`, so Vercel
+  serves resized AVIF/WebP from its CDN with no layout shift (see
+  `next.config.mjs` → `images`).
+- **Speed Insights + Analytics.** `@vercel/speed-insights` and
+  `@vercel/analytics` are wired into the root layout — real-user Core Web Vitals
+  and traffic appear in your Vercel dashboard with no extra setup (free tier
+  included; they no-op locally).
+- **Edge caching.** `vercel.json` sets `immutable` caching on hashed static
+  assets and sane security headers site-wide.
+- **Fully static output.** No server functions are required for the site
+  itself, so cold starts are irrelevant and global TTFB is minimal.
+
+> **Note:** Speed Insights and Analytics only report once deployed to Vercel
+> (enable them in the project's *Analytics* / *Speed Insights* tabs). They add
+> no visible UI and are safe to leave in for any host.
 
 ## Customization
 
@@ -118,7 +141,8 @@ required in CI.
 
 - Three.js is dynamically imported and disabled on small screens / reduced-motion.
 - All animations respect `prefers-reduced-motion`.
-- Images are lazy-loaded; pages are statically pre-rendered.
+- Images use `next/image` (Vercel Image Optimization) with reserved space, so
+  they lazy-load without layout shift; pages are statically pre-rendered.
 - Semantic landmarks, keyboard-accessible palette (⌘K) and controls.
 
 ## Easter eggs

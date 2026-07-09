@@ -5,6 +5,7 @@
   "description": "A digital operating system — Engineering Intelligence for Living Systems",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "velite --clean",
     "build": "next build",
     "start": "next start",
     "content": "velite",
@@ -13,6 +14,9 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "@react-three/fiber": "^9.0.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -26,7 +30,6 @@
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.0.0",
     "three": "^0.180.0",
-    "@react-three/fiber": "^9.0.0",
     "velite": "^0.3.0"
   },
   "devDependencies": {

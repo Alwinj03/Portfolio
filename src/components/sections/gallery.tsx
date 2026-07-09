@@ -1,11 +1,16 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import type { Card } from '@/lib/content'
 import { SectionHeader } from '@/components/section-header'
 import { cn } from '@/lib/utils'
+
+// Repeating aspect ratios give the grid a masonry rhythm while letting
+// next/image reserve exact space (no layout shift) even for unknown dimensions.
+const ASPECTS = ['aspect-[4/5]', 'aspect-square', 'aspect-[3/4]', 'aspect-[4/3]']
 
 interface Shot {
   src: string
@@ -73,14 +78,17 @@ export function Gallery({ items }: { items: Card[] }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: (i % 8) * 0.03 }}
-            className="group mb-4 block w-full overflow-hidden rounded-2xl border border-border"
+            className={cn(
+              'group relative mb-4 block w-full overflow-hidden rounded-2xl border border-border',
+              ASPECTS[i % ASPECTS.length],
+            )}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={shot.src}
               alt={shot.title}
-              loading="lazy"
-              className="w-full transition-transform duration-500 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </motion.button>
         ))}

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Github, FileText, Play, Globe } from 'lucide-react'
 import {
@@ -142,7 +143,7 @@ export default async function EntryPage({ params }: { params: Promise<Params> })
         {entry.cover && (
           <Reveal delay={0.1}>
             <div className="mt-10 overflow-hidden rounded-3xl border border-border">
-              <Cover src={entry.cover} alt={entry.title} aspect="aspect-[16/9]" />
+              <Cover src={entry.cover} alt={entry.title} aspect="aspect-[16/9]" priority />
             </div>
           </Reveal>
         )}
@@ -154,14 +155,18 @@ export default async function EntryPage({ params }: { params: Promise<Params> })
         {entry.gallery.length > 0 && (
           <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {entry.gallery.map((src) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <div
                 key={src}
-                src={src}
-                alt={entry.title}
-                loading="lazy"
-                className="aspect-square w-full rounded-2xl border border-border object-cover"
-              />
+                className="relative aspect-square w-full overflow-hidden rounded-2xl border border-border"
+              >
+                <Image
+                  src={src}
+                  alt={entry.title}
+                  fill
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
             ))}
           </div>
         )}
