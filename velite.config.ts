@@ -9,9 +9,26 @@ import { defineCollection, defineConfig, s } from 'velite'
  * ───────────────────────────────────────────────────────────────────
  */
 
-/** Frontmatter every content type shares. All fields optional unless noted. */
+/** Pull the first Markdown heading (used as a title fallback). */
+function firstHeading(md?: string): string | undefined {
+  if (!md) return undefined
+  const m = md.match(/^\s*#{1,6}\s+(.+?)\s*$/m)
+  return m ? m[1].replace(/[*_`~]/g, '').trim() : undefined
+}
+
+/** Turn a filename slug into a readable title, e.g. "future-of-bio" → "Future Of Bio". */
+function prettify(slug: string): string {
+  return slug
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .trim()
+}
+
+/** Frontmatter every content type shares. All fields optional. */
 const shared = {
-  title: s.string(),                              // required
+  // Title is optional: if omitted we fall back to the first heading in the body,
+  // then to a prettified filename — so a bare Markdown file never breaks the build.
+  title: s.string().optional(),
   subtitle: s.string().optional(),
   description: s.string().optional(),             // used for cards + SEO
   date: s.isodate().optional(),                   // e.g. 2025-06-01
@@ -57,14 +74,16 @@ function collection(name: string, dir: string) {
       .object({
         ...shared,
         path: s.path(),
+        raw: s.raw(),
         body: s.mdx(),
         metadata: s.metadata(),
       })
-      .transform((data) => {
+      .transform(({ raw, ...data }) => {
         const segments = data.path.split('/')
         const slug = segments[segments.length - 1]
         return {
           ...data,
+          title: data.title ?? firstHeading(raw) ?? prettify(slug),
           slug,
           collection: dir,
           url: `/${dir}/${slug}`,
