@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 224 60% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 60% 8%;
+    --primary: 221 90% 55%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 220 25% 94%;
+    --secondary-foreground: 224 50% 15%;
+    --muted: 220 25% 94%;
+    --muted-foreground: 222 15% 42%;
+    --accent: 220 30% 92%;
+    --accent-foreground: 224 50% 15%;
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 221 90% 55%;
+    --electric: 217 100% 60%;
+    --emerald: 160 84% 39%;
+    --violet: 262 84% 62%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 225 50% 4%;
+    --foreground: 214 30% 92%;
+    --card: 224 44% 7%;
+    --card-foreground: 214 30% 92%;
+    --primary: 217 100% 64%;
+    --primary-foreground: 225 50% 5%;
+    --secondary: 224 35% 12%;
+    --secondary-foreground: 214 30% 88%;
+    --muted: 224 35% 12%;
+    --muted-foreground: 218 15% 62%;
+    --accent: 224 35% 14%;
+    --accent-foreground: 214 30% 92%;
+    --border: 223 30% 15%;
+    --input: 223 30% 15%;
+    --ring: 217 100% 64%;
+    --electric: 217 100% 66%;
+    --emerald: 158 74% 46%;
+    --violet: 262 90% 70%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--electric) / 0.25);
+  }
+}
+
+@layer components {
+  /* Frosted glass card surface */
+  .glass {
+    @apply border border-black/5 bg-white/60 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04];
+  }
+
+  /* Soft electric glow used on hover states */
+  .glow {
+    box-shadow:
+      0 0 0 1px hsl(var(--electric) / 0.25),
+      0 8px 40px -12px hsl(var(--electric) / 0.45);
+  }
+
+  /* Gradient headline text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-[hsl(var(--electric))] via-[hsl(var(--emerald))] to-[hsl(var(--violet))] bg-clip-text text-transparent;
+  }
+
+  /* Aurora backdrop blobs */
+  .aurora {
+    @apply pointer-events-none absolute inset-0 overflow-hidden;
+  }
+  .aurora::before,
+  .aurora::after {
+    content: '';
+    @apply absolute rounded-full blur-3xl;
+    animation: aurora-drift 18s ease-in-out infinite;
+  }
+  .aurora::before {
+    width: 55vw;
+    height: 55vw;
+    top: -18%;
+    left: -12%;
+    background: radial-gradient(circle, hsl(var(--electric) / 0.16), transparent 65%);
+  }
+  .aurora::after {
+    width: 48vw;
+    height: 48vw;
+    bottom: -20%;
+    right: -10%;
+    animation-delay: -9s;
+    background: radial-gradient(circle, hsl(var(--violet) / 0.14), transparent 65%);
+  }
+
+  /* Section shell */
+  .section {
+    @apply relative mx-auto w-full max-w-6xl px-6 py-24 sm:py-32;
+  }
+
+  /* Placeholder cover gradient when an entry has no image */
+  .cover-fallback {
+    background:
+      radial-gradient(ellipse at 20% 10%, hsl(var(--electric) / 0.35), transparent 55%),
+      radial-gradient(ellipse at 85% 90%, hsl(var(--violet) / 0.35), transparent 55%),
+      radial-gradient(ellipse at 70% 20%, hsl(var(--emerald) / 0.25), transparent 50%),
+      hsl(var(--card));
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
