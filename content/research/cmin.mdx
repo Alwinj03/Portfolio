@@ -8,7 +8,7 @@ featured: true
 
 ## What if we could read the cow's gut like a network, not a black box?
 
-A cow's rumen is one of nature's best biomass reactors — a dense microbial community that tears down tough lignocellulosic plant matter into usable energy. **CMIN** reconstructs that community *computationally*: which microbes are there, what each one metabolizes, and how they feed each other. The endgame is understanding rumen microbiota well enough to inform **biofuel and sustainable bioprocessing** research.
+A cow's rumen is one of nature's best biomass reactors, a dense microbial community that tears down tough lignocellulosic plant matter into usable energy. **CMIN** reconstructs that community *computationally*: which microbes are there, what each one metabolizes, and how they feed each other. The endgame is understanding rumen microbiota well enough to inform **biofuel and sustainable bioprocessing** research.
 
 I worked on this during my **INSA–IASC–NASI Summer Research Fellowship** at **IIT Kharagpur**, under **Dr. Amit Ghosh** — replicating and extending the metabolic interaction network methodology of **Mondal et al. (2022)**.
 
@@ -16,8 +16,8 @@ I worked on this during my **INSA–IASC–NASI Summer Research Fellowship** at 
 
 I was assigned **35 microbial species** to characterize from the ground up, then wire into two networks:
 
-- a **Community-wide Metabolic Interaction Network (CMIN)** — the full web of who exchanges what
-- a **species-level metabolic interaction network** — the same logic zoomed into individual bacteria
+- a **Community-wide Metabolic Interaction Network (CMIN)**, the full web of who exchanges what
+- a **species-level metabolic interaction network**, the same logic zoomed into individual bacteria
 
 ### The pipeline
 
@@ -27,11 +27,11 @@ For uncharacterized organisms, I ran a full genome-annotation stack:
 - **dbCAN2 / dbCAN3** for CAZyme profiling (the carbohydrate-active enzymes that do the actual biomass breakdown)
 - **BlastKOALA** for KEGG pathway + KO-number confirmation of metabolic outputs
 
-Every predicted metabolite had to clear a **KO-number threshold** — if the genome didn't support it, it got cut, even when it was biologically plausible.
+Every predicted metabolite had to clear a **KO-number threshold**, if the genome didn't support it, it got cut, even when it was biologically plausible.
 
 ### What the networks revealed
 
-The interesting part is the **cross-feeding**: microbes quietly handing each other the compounds they can't make themselves. A few functional signatures I traced —
+The interesting part is the **cross-feeding**: microbes quietly handing each other the compounds they can't make themselves. A few functional signatures I traced:
 
 - **B12 / cobalamin donors** feeding vitamin-dependent neighbors
 - **butyrate producers**, distinguished by *mechanism* (Etf complex vs. butyrate kinase)
