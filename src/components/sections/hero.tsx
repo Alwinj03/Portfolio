@@ -1,14 +1,11 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ArrowDown, Download, Sparkles } from 'lucide-react'
 import { site } from '@/lib/site'
 import { EASE } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import type { Variants } from 'framer-motion'
-
-const ParticleField = dynamic(() => import('@/components/three/particle-field'), { ssr: false })
 
 const word: Variants = {
   hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
@@ -27,10 +24,9 @@ export function Hero() {
   return (
     <section id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden">
       <div className="aurora" />
-      <div className="absolute inset-0">
-        <ParticleField />
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background" />
+      {/* The DNA helix here is drawn by the global <StoryBackground> at scroll
+          progress 0; this gradient just seats the hero copy above it. */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/80" />
 
       <div className="relative z-10 mx-auto w-full max-w-5xl px-6 text-center">
         <motion.div

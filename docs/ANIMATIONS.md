@@ -4,6 +4,51 @@ Motion here is **intentional, not decorative**. Every animation has a job:
 orient the eye, reveal hierarchy, or reward interaction. Everything respects
 `prefers-reduced-motion`.
 
+## The cinematic story background (the spine)
+
+The whole home page scrolls over **one continuous, morphing particle system** —
+not a series of separate scenes. As you scroll, ~4,200 GPU-blended particles are
+re-targeted from one procedural "idea" to the next, so nothing ever fades: DNA
+literally unwinds into a neural network, which becomes a brain, then cells, a
+metabolic network, a bioreactor, architecture cubes, a constellation, community
+rings, an institutional skyline, a tools dashboard, a globe, and finally a
+converging orbit that the logo/signature rises out of.
+
+This maps the narrative **Life → Biology → Intelligence → Research →
+Engineering → Innovation → Leadership → Policy → Technology → Global → Future**.
+
+Where it lives:
+
+| File | Role |
+| ---- | ---- |
+| `src/components/three/story/formations.ts` | The 13 procedural formations + their colors. Each is a pure function filling a `Float32Array` of particle positions. **Edit the story here.** |
+| `src/components/three/story/morph-field.tsx` | The persistent `<points>` system. Every frame it reads scroll progress, blends the two nearest formations, eases position + color, applies mouse parallax, and dollies the camera. |
+| `src/components/three/story/cinematic-scene.tsx` | Canvas + ambient light + **Bloom / Vignette** post-processing. |
+| `src/components/story-background.tsx` | Client gate + dynamic import. Renders a fixed, `pointer-events:none` layer behind the content, disabled for reduced-motion / small screens / ≤2 cores / no-WebGL. |
+
+How it composites with content:
+
+- The base background color is on `<html>`; `<body>` is transparent so the fixed
+  canvas (behind a `z-10` content layer) shows through.
+- **Hero** and the **Vision/Contact finale** sit on transparent sections, so the
+  DNA and the globe/orbit read vividly.
+- The **text chapters** in between sit on a translucent `bg-background/60
+  backdrop-blur-md` scrim — the morph keeps evolving behind them as soft ambient
+  light while copy stays perfectly legible.
+
+**To change the narrative:** reorder or edit the `STORY` array in
+`formations.ts`. Add a formation by writing a `Builder` (fill `Float32Array`
+of length `n*3`) and inserting it with a color; the morph engine picks it up
+automatically — no other file changes.
+
+**Scroll = timeline.** Progress is `scrollY / (scrollHeight - innerHeight)`,
+smoothed each frame, so the transformation is fully scrubbable in both
+directions and settles with weight instead of snapping.
+
+**Performance:** one draw call, instanced points, DPR capped at 1.6, additive
+blending + a soft sprite for the glow, and the entire scene is `next/dynamic`
+(`ssr:false`) so it never touches the first-load bundle.
+
 ## The toolkit
 
 | Tool              | Used for                                                      |

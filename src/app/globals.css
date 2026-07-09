@@ -53,10 +53,14 @@
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    /* Base colour lives on <html> so the fixed 3D story canvas (behind the
+       content layer) stays visible through transparent sections. */
+    @apply bg-background;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
     text-rendering: optimizeLegibility;
   }
 

@@ -19,7 +19,7 @@ and DeepMind: cinematic, elegant, and memorable.
 | Styling       | **Tailwind CSS** + shadcn-style primitives, glassmorphism     |
 | Content       | **Velite** — type-safe MDX → data at build time               |
 | Motion        | **Framer Motion**, **GSAP**-ready, **Lenis** smooth scroll    |
-| 3D            | **Three.js** + **React Three Fiber** (hero particle field)    |
+| 3D            | **Three.js** + **R3F** + **drei** + **postprocessing** (Bloom) |
 | Search        | **cmdk** command palette (⌘K) over an auto-generated index    |
 | SEO           | Native Metadata API, OpenGraph, Twitter cards, JSON-LD        |
 | Feeds         | `sitemap.xml`, `robots.txt`, `rss.xml`, PWA `manifest`        |
@@ -149,7 +149,10 @@ environment variable.
 
 - **⌘K / Ctrl-K** — command palette search.
 - **Konami code** (↑↑↓↓←→←→ B A) — toggles "lab mode".
-- Hero particle field morphs between a **DNA helix** and a **neural network**.
+- The entire page scrolls over **one morphing particle system** — DNA → neural
+  network → brain → cells → metabolism → bioreactor → architecture →
+  constellation → community → institutions → tools → globe → logo. See
+  [docs/ANIMATIONS.md](./docs/ANIMATIONS.md) → "The cinematic story background".
 
 ---
 
