@@ -1,18 +1,13 @@
-import { all, toCards } from '@/lib/content'
+import { all } from '@/lib/content'
 import { LoadingScreen } from '@/components/loading-screen'
 import { StoryBackground } from '@/components/story-background'
 import { Hero } from '@/components/sections/hero'
 import { About } from '@/components/sections/about'
 import { Education } from '@/components/sections/education'
-import { GridSection } from '@/components/sections/grid-section'
-import { Achievements } from '@/components/sections/achievements'
-import { Experience } from '@/components/sections/experience'
+import { ExpandableDocs } from '@/components/sections/expandable-docs'
 import { Leadership } from '@/components/sections/leadership'
 import { WhitePapers } from '@/components/sections/whitepapers'
 import { Tools } from '@/components/sections/tools'
-import { Gallery } from '@/components/sections/gallery'
-import { Timeline } from '@/components/sections/timeline'
-import { Vision } from '@/components/sections/vision'
 import { Contact } from '@/components/sections/contact'
 
 export default function HomePage() {
@@ -24,46 +19,35 @@ export default function HomePage() {
       <StoryBackground />
 
       <div className="relative z-10">
-        {/* Hero + finale stay transparent so the DNA / globe / logo read vividly. */}
+        {/* Hero stays transparent so the DNA reads vividly over the 3D. */}
         <Hero />
 
-        {/* Text-heavy chapters sit on a translucent scrim: the story keeps
-            morphing behind them as ambient light, but copy stays legible. */}
-        <div className="relative bg-background/60 backdrop-blur-md">
+        {/* Text chapters sit on a translucent scrim (no blur, so the morphing
+            story stays crisp behind them) while copy stays legible. */}
+        <div className="relative bg-background/70">
           <About />
           <Education />
-          <GridSection
+          <ExpandableDocs
             id="research"
-            collection="research"
             eyebrow="Research"
             title="Questions worth chasing"
-            description="Investigations across biology, computation and engineering — methods, tools and impact."
+            description="Investigations across biology, computation and engineering. Click any project to read the full story — methods, tools and results."
+            icon="research"
+            items={all('research')}
           />
-          <GridSection
-            id="projects"
-            collection="projects"
-            eyebrow="Projects"
-            title="Things I've built"
-            description="Products, prototypes and open-source systems, from architecture to roadmap."
-          />
-          <Achievements items={toCards(all('achievements'))} />
-          <Experience />
           <Leadership />
+          <ExpandableDocs
+            id="achievements"
+            eyebrow="Achievements"
+            title="Milestones & recognition"
+            description="Fellowships, competitions and awards. Click any milestone to expand the story."
+            icon="award"
+            items={all('achievements')}
+          />
           <WhitePapers />
           <Tools />
-          <Gallery items={toCards(all('gallery'))} />
-          <Timeline items={toCards(all('timeline'))} />
-          <GridSection
-            id="blog"
-            collection="blog"
-            eyebrow="Writing"
-            title="Notes & essays"
-            description="Thinking in public about science, technology and the future."
-            columns={3}
-          />
         </div>
 
-        <Vision />
         <Contact />
       </div>
     </>

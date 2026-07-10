@@ -65,11 +65,13 @@ const shared = {
     .default({}),
 }
 
-/** Factory: one line per content type. */
-function collection(name: string, dir: string) {
+/** Factory: one line per content type. `dirs` lets several folders feed one
+ *  collection (e.g. both `achievements/` and `Awards/`). */
+function collection(name: string, dir: string, dirs: string[] = [dir]) {
+  const pattern = dirs.length > 1 ? `{${dirs.join(',')}}/**/*.mdx` : `${dir}/**/*.mdx`
   return defineCollection({
     name,
-    pattern: `${dir}/**/*.mdx`,
+    pattern,
     schema: s
       .object({
         ...shared,
@@ -106,7 +108,7 @@ export default defineConfig({
   collections: {
     about: collection('About', 'about'),
     education: collection('Education', 'education'),
-    achievements: collection('Achievement', 'achievements'),
+    achievements: collection('Achievement', 'achievements', ['achievements', 'Awards']),
     projects: collection('Project', 'projects'),
     research: collection('Research', 'research'),
     whitepapers: collection('Whitepaper', 'whitepapers'),
@@ -116,6 +118,7 @@ export default defineConfig({
     gallery: collection('GalleryItem', 'gallery'),
     timeline: collection('TimelineEntry', 'timeline'),
     blog: collection('Post', 'blog'),
+    contact: collection('Contact', 'contact'),
   },
   mdx: {
     rehypePlugins: [],

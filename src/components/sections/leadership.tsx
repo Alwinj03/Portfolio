@@ -1,44 +1,52 @@
 import { Users } from 'lucide-react'
-import { all, toCards } from '@/lib/content'
+import { all } from '@/lib/content'
 import { SectionHeader } from '@/components/section-header'
 import { Reveal } from '@/components/ui/reveal'
+import { MDX } from '@/components/mdx'
 import { TagList } from '@/components/cards/tags'
 import { EmptyState } from './empty-state'
 
+/** Leadership renders the full MDX body — events, workshops, and impact. */
 export function Leadership() {
-  const items = toCards(all('leadership'))
+  const items = all('leadership')
 
   return (
     <section id="leadership" className="section scroll-mt-24">
       <SectionHeader
         eyebrow="Leadership"
         title="Community & impact"
-        description="Events organized, workshops led, and communities built."
+        description="Clubs founded, events organized, and communities built."
       />
       {items.length === 0 ? (
         <EmptyState collection="leadership" />
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6">
           {items.map((e, i) => (
             <Reveal key={e.url} delay={i * 0.05}>
-              <div className="group flex h-full flex-col rounded-3xl border border-border bg-card p-7 transition-all hover:border-primary/40 hover:glow">
-                <div className="flex items-center justify-between">
-                  <span className="grid h-11 w-11 place-items-center rounded-2xl bg-violet/10 text-violet">
-                    <Users className="h-5 w-5" />
-                  </span>
-                  <span className="text-sm text-muted-foreground">{e.period ?? e.year}</span>
+              <article className="rounded-3xl border border-border bg-card p-7 sm:p-9">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-10 w-10 place-items-center rounded-2xl bg-violet/10 text-violet">
+                      <Users className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="font-display text-lg font-semibold leading-tight">{e.title}</p>
+                      {e.organization && (
+                        <p className="text-sm text-muted-foreground">{e.organization}</p>
+                      )}
+                    </div>
+                  </div>
+                  {(e.period || e.year) && (
+                    <span className="text-sm text-muted-foreground">{e.period ?? e.year}</span>
+                  )}
                 </div>
-                <h3 className="mt-5 font-display text-xl font-semibold">{e.title}</h3>
-                {e.role && <p className="text-sm font-medium text-primary">{e.role}</p>}
-                {(e.subtitle || e.description) && (
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {e.subtitle ?? e.description}
-                  </p>
+                <MDX code={e.body} />
+                {e.tags.length > 0 && (
+                  <div className="mt-5">
+                    <TagList tags={e.tags} max={8} />
+                  </div>
                 )}
-                <div className="mt-auto pt-5">
-                  <TagList tags={e.tags} />
-                </div>
-              </div>
+              </article>
             </Reveal>
           ))}
         </div>

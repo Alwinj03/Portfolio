@@ -1,60 +1,49 @@
 import { GraduationCap } from 'lucide-react'
-import { all, toCards } from '@/lib/content'
+import { all } from '@/lib/content'
 import { SectionHeader } from '@/components/section-header'
 import { Reveal } from '@/components/ui/reveal'
+import { MDX } from '@/components/mdx'
 import { TagList } from '@/components/cards/tags'
 import { EmptyState } from './empty-state'
 
+/**
+ * Education renders each entry's full MDX body — the real academic detail
+ * (institution, CGPA, coursework) is written in Markdown, so we show it.
+ */
 export function Education() {
-  const items = toCards(all('education'))
+  const items = all('education')
 
   return (
     <section id="education" className="section scroll-mt-24">
       <SectionHeader
         eyebrow="Education"
-        title="An academic foundation"
-        description="Institutions, coursework, and the ideas that shaped the way I think."
+        title="Academic journey"
+        description="Institutions, coursework, and the pivot that shaped how I think."
       />
       {items.length === 0 ? (
         <EmptyState collection="education" />
       ) : (
-        <div className="relative">
-          <div className="absolute left-6 top-2 h-full w-px bg-gradient-to-b from-primary/60 via-border to-transparent md:left-1/2" />
-          <div className="space-y-10">
-            {items.map((e, i) => (
-              <Reveal
-                key={e.url}
-                delay={i * 0.05}
-                className="relative grid gap-4 pl-16 md:grid-cols-2 md:gap-12 md:pl-0"
-              >
-                <span className="absolute left-6 top-6 z-10 grid h-4 w-4 -translate-x-1/2 place-items-center rounded-full border-2 border-primary bg-background md:left-1/2" />
-                <div
-                  className={
-                    i % 2 === 0
-                      ? 'md:col-start-1 md:pr-12 md:text-right'
-                      : 'md:col-start-2 md:pl-12'
-                  }
-                >
-                  <div className="glass rounded-3xl p-6">
-                    <div className="flex items-center gap-2 text-sm text-primary md:justify-end">
-                      <GraduationCap className="h-4 w-4" />
-                      {e.period ?? e.year}
-                    </div>
-                    <h3 className="mt-2 font-display text-xl font-semibold">{e.title}</h3>
-                    {e.organization && (
-                      <p className="text-sm text-muted-foreground">{e.organization}</p>
-                    )}
-                    {e.subtitle && <p className="mt-3 text-sm">{e.subtitle}</p>}
-                    {e.tags.length > 0 && (
-                      <div className="mt-4 md:flex md:justify-end">
-                        <TagList tags={e.tags} max={5} />
-                      </div>
-                    )}
-                  </div>
+        <div className="space-y-6">
+          {items.map((e, i) => (
+            <Reveal key={e.url} delay={i * 0.05}>
+              <article className="rounded-3xl border border-border bg-card p-7 sm:p-9">
+                <div className="mb-4 flex items-center gap-3 text-sm text-primary">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-primary/10">
+                    <GraduationCap className="h-5 w-5" />
+                  </span>
+                  <span className="font-medium">
+                    {e.organization ?? e.period ?? (e.year ? String(e.year) : 'Education')}
+                  </span>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+                <MDX code={e.body} />
+                {e.tags.length > 0 && (
+                  <div className="mt-5">
+                    <TagList tags={e.tags} max={8} />
+                  </div>
+                )}
+              </article>
+            </Reveal>
+          ))}
         </div>
       )}
     </section>

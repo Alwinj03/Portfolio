@@ -7,22 +7,29 @@ orient the eye, reveal hierarchy, or reward interaction. Everything respects
 ## The cinematic story background (the spine)
 
 The whole home page scrolls over **one continuous, morphing particle system** —
-not a series of separate scenes. As you scroll, ~4,200 GPU-blended particles are
-re-targeted from one procedural "idea" to the next, so nothing ever fades: DNA
-literally unwinds into a neural network, which becomes a brain, then cells, a
-metabolic network, a bioreactor, architecture cubes, a constellation, community
-rings, an institutional skyline, a tools dashboard, a globe, and finally a
-converging orbit that the logo/signature rises out of.
+not a series of separate scenes. Each formation is **anchored to a real page
+section**, so the transformation happens exactly as you cross from one chapter
+into the next. ~4,200 GPU-blended particles are re-targeted from one procedural
+"idea" to the next, so nothing ever fades:
 
-This maps the narrative **Life → Biology → Intelligence → Research →
-Engineering → Innovation → Leadership → Policy → Technology → Global → Future**.
+| Section | Formation | Idea |
+| ------- | --------- | ---- |
+| hero | DNA double helix | Life |
+| about | neural network | Intelligence |
+| education | brain / mind | Learning |
+| research | metabolic network | Discovery |
+| leadership | community rings | People |
+| achievements | constellation | Recognition |
+| whitepapers | institutional skyline | Policy |
+| tools | dashboard grid | Technology |
+| contact | globe + satellites | Global impact |
 
 Where it lives:
 
 | File | Role |
 | ---- | ---- |
-| `src/components/three/story/formations.ts` | The 13 procedural formations + their colors. Each is a pure function filling a `Float32Array` of particle positions. **Edit the story here.** |
-| `src/components/three/story/morph-field.tsx` | The persistent `<points>` system. Every frame it reads scroll progress, blends the two nearest formations, eases position + color, applies mouse parallax, and dollies the camera. |
+| `src/components/three/story/formations.ts` | The section-aligned formations + colors. Each is a pure function filling a `Float32Array`; the `STORY` array binds each to a section id. **Edit the story here.** |
+| `src/components/three/story/morph-field.tsx` | The persistent `<points>` system. Every frame it reads each section's live scroll position, maps the viewport to a continuous index across the formations, blends the two nearest, eases position + color, applies mouse parallax, and dollies the camera. |
 | `src/components/three/story/cinematic-scene.tsx` | Canvas + ambient light + **Bloom / Vignette** post-processing. |
 | `src/components/story-background.tsx` | Client gate + dynamic import. Renders a fixed, `pointer-events:none` layer behind the content, disabled for reduced-motion / small screens / ≤2 cores / no-WebGL. |
 
@@ -30,20 +37,20 @@ How it composites with content:
 
 - The base background color is on `<html>`; `<body>` is transparent so the fixed
   canvas (behind a `z-10` content layer) shows through.
-- **Hero** and the **Vision/Contact finale** sit on transparent sections, so the
-  DNA and the globe/orbit read vividly.
-- The **text chapters** in between sit on a translucent `bg-background/60
-  backdrop-blur-md` scrim — the morph keeps evolving behind them as soft ambient
-  light while copy stays perfectly legible.
+- **Hero** and **Contact** sit on transparent sections, so the DNA and the globe
+  read vividly.
+- The **text chapters** in between sit on a translucent `bg-background/70` scrim
+  (no blur, so the morph stays crisp), while copy stays legible on opaque cards.
 
 **To change the narrative:** reorder or edit the `STORY` array in
 `formations.ts`. Add a formation by writing a `Builder` (fill `Float32Array`
-of length `n*3`) and inserting it with a color; the morph engine picks it up
-automatically — no other file changes.
+of length `n*3`), bind it to a `section` id, and give it a color; the morph
+engine picks it up automatically — no other file changes.
 
-**Scroll = timeline.** Progress is `scrollY / (scrollHeight - innerHeight)`,
-smoothed each frame, so the transformation is fully scrubbable in both
-directions and settles with weight instead of snapping.
+**Scroll = timeline.** The morph index is driven by which section the viewport
+centre is in (and the fraction through it), smoothed each frame — so the
+transformation is fully scrubbable in both directions and settles with weight
+instead of snapping.
 
 **Performance:** one draw call, instanced points, DPR capped at 1.6, additive
 blending + a soft sprite for the glow, and the entire scene is `next/dynamic`

@@ -2,6 +2,7 @@ import {
   about,
   achievements,
   blog,
+  contact,
   education,
   experience,
   gallery,
@@ -32,6 +33,7 @@ export const collections = {
   gallery,
   timeline,
   blog,
+  contact,
 } satisfies Record<string, readonly Entry[]>
 
 export type CollectionKey = keyof typeof collections
@@ -122,7 +124,7 @@ const typeLabels: Record<string, string> = {
 
 export function searchIndex(): SearchDoc[] {
   return (Object.keys(collections) as CollectionKey[])
-    .filter((k) => k !== 'about')
+    .filter((k) => k !== 'about' && k !== 'contact')
     .flatMap((key) =>
       all(key).map((e) => ({
         title: e.title,

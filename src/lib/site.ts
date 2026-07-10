@@ -11,7 +11,7 @@ export const site = {
     'A digital operating system for research, products and ideas at the intersection of AI, biotechnology and engineering.',
   theme: 'Engineering Intelligence for Living Systems',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com',
-  email: 'alki2005alak@gmail.com',
+  email: 'alwinjoshua2005@gmail.com',
   resume: '/resume.pdf',
   keywords: [
     'AI',
@@ -24,16 +24,17 @@ export const site = {
   ],
   social: {
     github: 'https://github.com/alwinj03',
-    linkedin: 'https://linkedin.com/in/',
+    linkedin: 'https://www.linkedin.com/in/alwinjoshua',
     twitter: 'https://x.com/',
     scholar: 'https://scholar.google.com/',
   },
   nav: [
     { label: 'About', href: '/#about' },
+    { label: 'Education', href: '/#education' },
     { label: 'Research', href: '/#research' },
-    { label: 'Projects', href: '/#projects' },
+    { label: 'Leadership', href: '/#leadership' },
+    { label: 'Achievements', href: '/#achievements' },
     { label: 'Papers', href: '/#whitepapers' },
-    { label: 'Timeline', href: '/#timeline' },
     { label: 'Contact', href: '/#contact' },
   ],
 } as const
