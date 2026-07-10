@@ -138,16 +138,10 @@ export function searchIndex(): SearchDoc[] {
 
 /** Automatic statistics for the About section. */
 export function stats() {
-  const years = all('timeline')
-    .map((e) => e.year)
-    .filter((y): y is number => typeof y === 'number')
   return [
     { label: 'Research Projects', value: all('research').length },
     { label: 'Products & Projects', value: all('projects').length },
     { label: 'Achievements', value: all('achievements').length },
-    {
-      label: 'Years of Curiosity',
-      value: years.length > 1 ? Math.max(...years) - Math.min(...years) : all('timeline').length,
-    },
+    { label: 'Years of Curiosity', value: 21 },
   ].filter((s) => s.value > 0)
 }
