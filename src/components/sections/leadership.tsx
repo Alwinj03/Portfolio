@@ -23,7 +23,7 @@ export function Leadership() {
         <div className="grid gap-6">
           {items.map((e, i) => (
             <Reveal key={e.url} delay={i * 0.05}>
-              <article className="rounded-3xl border border-border bg-card p-7 sm:p-9">
+              <article className="rounded-3xl border border-border bg-card/70 p-7 backdrop-blur-xl sm:p-9">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <span className="grid h-10 w-10 place-items-center rounded-2xl bg-violet/10 text-violet">

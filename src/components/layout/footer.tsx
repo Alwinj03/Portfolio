@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { Github, Linkedin, Mail } from 'lucide-react'
 import { site } from '@/lib/site'
+
+type FooterLink = { label: string; href: string; disabled?: boolean }
 
 export function Footer() {
   return (
@@ -25,9 +27,8 @@ export function Footer() {
             <FooterCol
               title="Connect"
               links={[
-                { label: 'GitHub', href: site.social.github },
+                { label: 'GitHub', href: site.social.github, disabled: true },
                 { label: 'LinkedIn', href: site.social.linkedin },
-                { label: 'Scholar', href: site.social.scholar },
                 { label: 'Email', href: `mailto:${site.email}` },
               ]}
             />
@@ -47,14 +48,15 @@ export function Footer() {
             © {new Date().getFullYear()} {site.name}. Built as a living system.
           </p>
           <div className="flex items-center gap-3">
-            <IconLink href={site.social.github} label="GitHub">
+            {/* GitHub isn't live yet — shown as a dimmed, non-interactive chip. */}
+            <span
+              aria-hidden
+              className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground opacity-40 blur-[1px]"
+            >
               <Github className="h-4 w-4" />
-            </IconLink>
+            </span>
             <IconLink href={site.social.linkedin} label="LinkedIn">
               <Linkedin className="h-4 w-4" />
-            </IconLink>
-            <IconLink href={site.social.twitter} label="Twitter">
-              <Twitter className="h-4 w-4" />
             </IconLink>
             <IconLink href={`mailto:${site.email}`} label="Email">
               <Mail className="h-4 w-4" />
@@ -66,21 +68,33 @@ export function Footer() {
   )
 }
 
-function FooterCol({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+function FooterCol({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
       <h4 className="text-sm font-semibold">{title}</h4>
       <ul className="mt-4 space-y-2">
-        {links.map((l) => (
-          <li key={l.label}>
-            <Link
-              href={l.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {l.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((l) =>
+          l.disabled ? (
+            <li key={l.label}>
+              {/* Not live yet: a blurred, non-interactive placeholder. */}
+              <span
+                aria-hidden
+                className="pointer-events-none inline-block select-none text-sm text-muted-foreground opacity-40 blur-[1px]"
+              >
+                {l.label}
+              </span>
+            </li>
+          ) : (
+            <li key={l.label}>
+              <Link
+                href={l.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            </li>
+          ),
+        )}
       </ul>
     </div>
   )

@@ -5,7 +5,12 @@
  */
 export const site = {
   name: 'Alwin J',
+  fullName: 'Alwin Joshua',
   initials: 'AJ',
+  disciplines: ['AI', 'Biotechnology', 'Scientific Computing', 'Technology Policy'],
+  tagline: 'Engineering Life',
+  statement:
+    'Building intelligent systems, scientific software, and future technologies that bridge biology, artificial intelligence, engineering, and public policy.',
   title: 'Alwin J — Engineering Intelligence for Living Systems',
   description:
     'A digital operating system for research, products and ideas at the intersection of AI, biotechnology and engineering.',

@@ -22,9 +22,10 @@ export default function HomePage() {
         {/* Hero stays transparent so the DNA reads vividly over the 3D. */}
         <Hero />
 
-        {/* Text chapters sit on a translucent scrim (no blur, so the morphing
-            story stays crisp behind them) while copy stays legible. */}
-        <div className="relative bg-background/70">
+        {/* The wrapper is transparent so the morphing story stays bright between
+            sections; each content card below is glass (blurred, semi-opaque) so
+            the animation shows through blurred-but-visible while copy stays legible. */}
+        <div className="relative">
           <About />
           <Education />
           <ExpandableDocs

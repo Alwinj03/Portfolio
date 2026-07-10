@@ -15,7 +15,7 @@ export function About() {
             eyebrow={about?.subtitle ?? 'About'}
             title={about?.title ?? 'The mission behind the work'}
           />
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} className="rounded-3xl border border-border bg-card/70 p-7 backdrop-blur-xl sm:p-9">
             {about ? (
               <MDX code={about.body} />
             ) : (

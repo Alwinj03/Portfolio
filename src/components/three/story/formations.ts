@@ -230,7 +230,7 @@ export interface Keyframe {
 
 /** The ordered story, one formation per page section (in scroll order). */
 export const STORY: Keyframe[] = [
-  { section: 'hero', name: 'DNA', build: helix, color: [0.31, 0.62, 1.0] },
+  { section: 'hero', name: 'DNA', build: helix, color: [0.24, 0.83, 0.9] },
   { section: 'about', name: 'Neural', build: neural, color: [0.55, 0.36, 0.96] },
   { section: 'education', name: 'Mind', build: brain, color: [0.45, 0.5, 1.0] },
   { section: 'research', name: 'Research', build: metabolic, color: [0.1, 0.78, 0.55] },

@@ -17,7 +17,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="section scroll-mt-24">
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-border bg-card p-10 sm:p-16">
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-border bg-card/70 p-10 backdrop-blur-xl sm:p-16">
         <div className="aurora opacity-70" />
         <div className="relative">
           {doc ? (

@@ -59,7 +59,7 @@ export function ExpandableDocs({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ delay: i * 0.04 }}
-              className="overflow-hidden rounded-3xl border border-border bg-card"
+              className="overflow-hidden rounded-3xl border border-border bg-card/70 backdrop-blur-xl"
             >
               <button
                 onClick={() => setOpen(isOpen ? null : a.url)}

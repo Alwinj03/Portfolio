@@ -20,7 +20,7 @@ export function WhitePapers() {
       {items.length === 0 ? (
         <EmptyState collection="whitepapers" />
       ) : (
-        <div className="divide-y divide-border overflow-hidden rounded-3xl border border-border bg-card">
+        <div className="divide-y divide-border overflow-hidden rounded-3xl border border-border bg-card/70 backdrop-blur-xl">
           {items.map((p, i) => (
             <Reveal key={p.url} delay={i * 0.04}>
               <Link
