@@ -76,7 +76,7 @@ export function Hero() {
           initial="hidden"
           animate="show"
           variants={{ show: { transition: { delayChildren: 1.15, staggerChildren: 0.1 } } }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground sm:text-sm"
+          className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-medium uppercase tracking-[0.25em] text-foreground/90 [text-shadow:0_2px_18px_rgba(2,6,20,0.95)] sm:text-sm"
         >
           {site.disciplines.map((d, i) => (
             <motion.span
@@ -84,7 +84,7 @@ export function Hero() {
               variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
               className="flex items-center gap-x-3"
             >
-              {i > 0 && <span className="text-primary/60">•</span>}
+              {i > 0 && <span className="text-primary">•</span>}
               {d}
             </motion.span>
           ))}
@@ -96,7 +96,7 @@ export function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          className="mx-auto mt-8 max-w-[700px] text-base leading-relaxed text-muted-foreground sm:text-lg"
+          className="mx-auto mt-8 max-w-[700px] text-base leading-relaxed text-foreground/90 [text-shadow:0_2px_18px_rgba(2,6,20,0.95)] sm:text-lg"
         >
           {site.statement}
         </motion.p>
